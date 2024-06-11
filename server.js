@@ -98,13 +98,13 @@ app.get('/api', (req, res) => {
   });
 });
 
-app.get('/users/new', (req, res) => {
+app.get('/books/new', (req, res) => {
   res.send(`
       <div background = https://www.pexels.com/photo/photo-of-teacup-on-top-of-books-1831744/> 
         <h1>Create a User</h1>
         <form action="/api/users?api-key=perscholas"  method="POST">
           Name: <input type="text" name="name" /> <br />
-          Username: <input type="text" name="username" /> <br />
+          Username: <input type="text" author="username" /> <br />
           Email: <input type="text" name="email" /> <br />
           <input type="submit" value="Create User" />
         </form>
