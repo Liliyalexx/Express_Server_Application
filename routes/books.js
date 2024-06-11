@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const books = require('../data/books.js');
 
-//GET route to get all book data
+//GET route to get all post data
 router.get('/', (req, res) => {
   const links = [
     {
@@ -15,10 +15,10 @@ router.get('/', (req, res) => {
   res.json({ books, links });
 });
 
-// GET route to get a book by ID
+// GET route to get a post by ID
 router.get('/:id', (req, res, next) => {
   // Using the Array.find method to find the user with the same id as the one sent with the request
-  const book = books.find((p) => p.id == req.params.id);
+  const post = books.find((p) => p.id == req.params.id);
 
   const links = [
     {
@@ -33,7 +33,7 @@ router.get('/:id', (req, res, next) => {
     },
   ];
 
-  if (book) res.json({ book, links });
+  if (post) res.json({ post, links });
   else next();
 });
 
@@ -51,59 +51,60 @@ router.get('/:id/comments?userId=<VALUE>', (req, res) => {
   const bookComments = comments.filter(comment => comment.bookId === bookId && comment.userId === parseInt(userId));
   res.json(bookComments);
 });
-// book Create a book
+// POST Create a Post
 router.post('/', (req, res) => {
-  // Within the book request we will create a new book.
+  // Within the POST request we will create a new post.
   // The client will pass us data and we'll push that data into our psots array.
-  // the book data that we want to create is inside the req.body
+  // the post data that we want to create is inside the req.body
   if (req.body.userId && req.body.title && req.body.content) {
-    // If the code gets to this point, we are good to create the book
-    const book = {
+    // If the code gets to this point, we are good to create the post
+    const post = {
       id: books.length + 1,
-      userId: req.body.userId,
       title: req.body.title,
+      author: req.body.author, 
       content: req.body.content,
+      url:req.body.url, 
     };
 
-    books.push(book);
-    res.json(book);
+    books.push(post);
+    res.json(post);
   } else {
     res.status(400).json({ error: 'Insufficient Data' });
   }
 });
 
-//PATCH Update a Book
+//PATCH Update a Post
 router.patch('/:id', (req, res, next) => {
   // Within the PATCH request route, we allow the client
   // to make changes to an existing user in the database.
-  const book = books.find((p, i) => {
+  const post = books.find((p, i) => {
     if (p.id == req.params.id) {
       for (const key in req.body) {
-        // Applying the updates within the req.body to the in-memory book
+        // Applying the updates within the req.body to the in-memory post
         books[i][key] = req.body[key];
       }
       return true;
     }
   });
 
-  if (book) {
-    res.json(book);
+  if (post) {
+    res.json(post);
   } else {
     next();
   }
 });
 
-// DELETE Delete a book
+// DELETE Delete a post
 router.delete('/:id', (req, res) => {
   // The DELETE request route simply removes a resource.
-  const book = books.find((p, i) => {
+  const post = books.find((p, i) => {
     if (p.id == req.params.id) {
       books.splice(i, 1);
       return true;
     }
   });
 
-  if (book) res.json(book);
+  if (post) res.json(post);
   else next();
 });
 
