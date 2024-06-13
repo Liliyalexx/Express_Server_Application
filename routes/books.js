@@ -1,43 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const books = require('../data/books.js');
+const comments = require('../data/comments.js');
 
 //GET route to get all post data
 router.get('/', (req, res) => {
-  const links = [
-    {
-      href: 'books/:id',
-      rel: ':id',
-      type: 'GET',
-    },
-  ];
+  // const links = [
+  //   {
+  //     href: 'books/:id',
+  //     rel: ':id',
+  //     type: 'GET',
+  //   },
+  // ];
 
   res.json({ books, links });
 });
 
-// GET route to get a post by ID
+// GET a book by ID
 router.get('/:id', (req, res, next) => {
   // Using the Array.find method to find the user with the same id as the one sent with the request
-  const post = books.find((p) => p.id == req.params.id);
-
-  const links = [
-    {
-      href: `/${req.params.id}`,
-      rel: '',
-      type: 'PATCH',
-    },
-    {
-      href: `/${req.params.id}`,
-      rel: '',
-      type: 'DELETE',
-    },
-  ];
-
-  if (post) res.json({ post, links });
-  else next();
+  const book = books.find((b) => b.id === parseInt(req.params.id));
+  if (book) {
+    res.json(book);
+  } else {
+    res.status(404).send('Book not found');
+  }
 });
 
-//comments
+//GET comments for a book
 
 router.get('/:id/comments', (req, res) => {
   const bookId = parseInt(req.params.id);
@@ -45,54 +35,52 @@ router.get('/:id/comments', (req, res) => {
   res.json(bookComments);
 });
 
-router.get('/:id/comments?userId=<VALUE>', (req, res) => {
-  const bookId = parseInt(req.params.id);
-  const userId = req.query.userId;
-  const bookComments = comments.filter(comment => comment.bookId === bookId && comment.userId === parseInt(userId));
-  res.json(bookComments);
-});
-// POST Create a Post
+// router.get('/:id/comments?userId=<VALUE>', (req, res) => {
+//   const bookId = parseInt(req.params.id);
+//   const userId = req.query.userId;
+//   const bookComments = comments.filter(comment => comment.bookId === bookId && comment.userId === parseInt(userId));
+//   res.json(bookComments);
+// });
+
+// POST a new book
 router.post('/', (req, res) => {
-  // Within the POST request we will create a new post.
-  // The client will pass us data and we'll push that data into our psots array.
-  // the post data that we want to create is inside the req.body
-  if (req.body.userId && req.body.title && req.body.content) {
+  const {title, author, content, url } = req.body;
+  if (title, author, content) {
     // If the code gets to this point, we are good to create the post
-    const post = {
+    const newBook = {
       id: books.length + 1,
-      title: req.body.title,
-      author: req.body.author, 
-      content: req.body.content,
-      url:req.body.url, 
+      title,
+      author,
+      content,
+      url: url || '',
     };
 
-    books.push(post);
-    res.json(post);
+    books.push(newBook);
+    res.json(newBook);
   } else {
     res.status(400).json({ error: 'Insufficient Data' });
   }
 });
 
 //PATCH Update a Post
-router.patch('/:id', (req, res, next) => {
-  // Within the PATCH request route, we allow the client
-  // to make changes to an existing user in the database.
-  const post = books.find((p, i) => {
-    if (p.id == req.params.id) {
-      for (const key in req.body) {
-        // Applying the updates within the req.body to the in-memory post
-        books[i][key] = req.body[key];
-      }
-      return true;
-    }
+router.post('/:id/comments', (req, res) => {
+  const bookId = parseInt(req.param.id);
+  const {userId, content } = req.params.body;
+  if(userId && content) {
+    const newComment = {
+      id: comments.length +1, 
+      bookId, 
+      userId, 
+      content
+    };
+    comments.push(newComment);
+    res.json(newComment);
+  }else{
+    res.status(400).json({error: "Insufficient Data" });
+  }
   });
 
-  if (post) {
-    res.json(post);
-  } else {
-    next();
-  }
-});
+
 
 // DELETE Delete a post
 router.delete('/:id', (req, res) => {

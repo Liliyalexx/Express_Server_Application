@@ -1,12 +1,12 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3003;
 const userRouter = require('./routes/users.js');
 const bookRouter = require('./routes/books.js');
 
-// Body parser middlware
-// we have access to the parsed data within our routes.
-// The parsed data will be located in "req.body".
+
+// Body parser middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -26,33 +26,46 @@ ${time.toLocaleTimeString()}: Received a ${req.method} request to ${req.url}.`
   next();
 });
 
-// Valid API Keys.
-const apiKeys = ['Hunger Games', 'Three Body Problem', 'Fahrenheit 451', 'The Little Lady of the Big House', 'Dark Matter', 'Tomorrow, and Tomorrow, and Tomorrow', 'Dunes', 'Project Hail Mary','Alyce Network'   ];
+// // Valid API Keys.
+// const apiKeys = [
+//   'Hunger Games',
+//   'Three Body Problem',
+//   'Fahrenheit 451',
+//   'The Little Lady of the Big House',
+//   'Dark Matter',
+//   'Tomorrow, and Tomorrow, and Tomorrow',
+//   'Dunes',
+//   'Project Hail Mary',
+//   'Alyce Network',
+// ];
 
-// New middleware to check for API keys!
-// Note that if the key is not verified,
-// we do not call next(); this is the end.
-// This is why we attached the /api/ prefix
-// to our routing at the beginning!
-app.use('/api', function (req, res, next) {
-  var key = req.query['api-key'];
+// // New middleware to check for API keys!
+// // Note that if the key is not verified,
+// // we do not call next(); this is the end.
+// // This is why we attached the /api/ prefix
+// // to our routing at the beginning!
+// app.use('/api', function (req, res, next) {
+//   var key = req.query['api-key'];
 
-  // Check for the absence of a key.
-  if (!key) {
-    res.status(400);
-    return res.json({ error: 'API Key Required' });
-  }
+//   // Check for the absence of a key.
+//   if (!key) {
+//     res.status(400);
+//     return res.json({ error: 'API Key Required' });
+//   }
 
-  // Check for key validity.
-  if (apiKeys.indexOf(key) === -1) {
-    res.status(401);
-    return res.json({ error: 'Invalid API Key' });
-  }
+//   // Check for key validity.
+//   if (apiKeys.indexOf(key) === -1) {
+//     res.status(401);
+//     return res.json({ error: 'Invalid API Key' });
+//   }
 
-  // Valid key! Store it in req.key for route access.
-  req.key = key;
-  next();
-});
+//   // Valid key! Store it in req.key for route access.
+//   req.key = key;
+//   next();
+// });
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'views')));
 
 // API Routes
 app.use('/api/users', userRouter);
@@ -98,18 +111,22 @@ app.get('/api', (req, res) => {
   });
 });
 
-app.get('/books/new', (req, res) => {
-  res.send(`
-      <div background = https://www.pexels.com/photo/photo-of-teacup-on-top-of-books-1831744/> 
-        <h1>Create a User</h1>
-        <form action="/api/users?api-key=perscholas"  method="POST">
-          Name: <input type="text" name="name" /> <br />
-          Username: <input type="text" author="username" /> <br />
-          Email: <input type="text" name="email" /> <br />
-          <input type="submit" value="Create User" />
-        </form>
-      </div>
-    `);
+// app.get('/books/new', (req, res) => {
+//   res.send(`
+//       <div> 
+//         <h1>Create Book</h1>
+//         <form action="/api/users?api-key=Hunger Games"  method="POST">
+//           Title: <input type="text" title="title" /> <br />
+//           Author: <input type="text" author="author" /> <br />
+//           Content: <input type="description=" description="description" /> <br />
+//           <input type="submit" value="Create User" />
+//         </form>
+//       </div>
+//     `);
+// });
+
+app.get('/books/new',(req,res) => {
+  res.sendFile(path.join(__dirname, 'views/new-book.html'));
 });
 
 // The only way this middlware runs is if a route handler function runs the "next()" function
