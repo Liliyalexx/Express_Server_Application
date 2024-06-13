@@ -4,13 +4,13 @@ const users = require('../data/users.js');
 
 //GET route to get all users
 router.get('/', (req, res) => {
-  // const links = [
-  //   {
-  //     href: 'books/:id',
-  //     rel: ':id',
-  //     type: 'GET',
-  //   },
-  // ];
+  const links = [
+    {
+      href: 'users/:id',
+      rel: ':id',
+      type: 'GET',
+    },
+  ];
 
   res.json(users);
 });
@@ -20,18 +20,18 @@ router.get('/:id', (req, res, next) => {
  
   const user = users.find((u) => u.id == req.params.id);
 
-  // const links = [
-  //   {
-  //     href: `/${req.params.id}`,
-  //     rel: '',
-  //     type: 'PATCH',
-  //   },
-  //   {
-  //     href: `/${req.params.id}`,
-  //     rel: '',
-  //     type: 'DELETE',
-  //   },
-  // ];
+  const links = [
+    {
+      href: `/${req.params.id}`,
+      rel: '',
+      type: 'PATCH',
+    },
+    {
+      href: `/${req.params.id}`,
+      rel: '',
+      type: 'DELETE',
+    },
+  ];
 
   if (user) {
    res.json(user);
@@ -56,16 +56,17 @@ router.get('/:id', (req, res, next) => {
 // });
 // Post a new user(for registration)
 router.post('/', (req, res) => {
-  const{name, username, email} = req.body;
+  const { name, username, email } = req.body;
+  // Check if all required fields are present
   if (name && username && email) {
     const newUser = {
-      id: users.length + 1,
-      name,
-      username,
-      email
+      id: users.length + 1, // Assuming users is an array of existing users
+      name: name,
+      username: username,
+      email: email,
     };
     users.push(newUser);
-    res.json(newUser);
+    res.status(201).json(newUser);
   } else {
     res.status(400).json({ error: 'Insufficient Data' });
   }

@@ -5,13 +5,13 @@ const comments = require('../data/comments.js');
 
 //GET route to get all post data
 router.get('/', (req, res) => {
-  // const links = [
-  //   {
-  //     href: 'books/:id',
-  //     rel: ':id',
-  //     type: 'GET',
-  //   },
-  // ];
+  const links = [
+    {
+      href: 'books/:id',
+      rel: ':id',
+      type: 'GET',
+    },
+  ];
 
   res.json({ books, links });
 });
@@ -21,9 +21,21 @@ router.get('/:id', (req, res, next) => {
   // Using the Array.find method to find the user with the same id as the one sent with the request
   const book = books.find((b) => b.id === parseInt(req.params.id));
   if (book) {
-    res.json(book);
+    const links = [
+      {
+        href: `/${req.params.id}`,
+        rel: '',
+        type: 'PATCH',
+      },
+      {
+        href: `/${req.params.id}`,
+        rel: '',
+        type: 'DELETE',
+      },
+    ];
+    res.json({ book, links });
   } else {
-    res.status(404).send('Book not found');
+    next();
   }
 });
 
@@ -44,55 +56,56 @@ router.get('/:id/comments', (req, res) => {
 
 // POST a new book
 router.post('/', (req, res) => {
-  const {title, author, content, url } = req.body;
-  if (title, author, content) {
-    // If the code gets to this point, we are good to create the post
-    const newBook = {
+  if (req.body.title && req.body.author && req.body.content) {
+    // If the code gets to this point, we are good to create the book
+    const book = {
       id: books.length + 1,
-      title,
-      author,
-      content,
-      url: url || '',
+      title: req.body.title,
+      author: req.body.author,
+      content: req.body.content,
+      url: req.body.url || '',
     };
 
-    books.push(newBook);
-    res.json(newBook);
+    books.push(book);
+    res.json(book);
   } else {
     res.status(400).json({ error: 'Insufficient Data' });
   }
 });
 
+
 //PATCH Update a Post
-router.post('/:id/comments', (req, res) => {
-  const bookId = parseInt(req.param.id);
-  const {userId, content } = req.params.body;
-  if(userId && content) {
-    const newComment = {
-      id: comments.length +1, 
-      bookId, 
-      userId, 
-      content
-    };
-    comments.push(newComment);
-    res.json(newComment);
-  }else{
-    res.status(400).json({error: "Insufficient Data" });
-  }
+router.patch('/:id', (req, res, next) => {
+  // Within the PATCH request route, we allow the client to make changes to an existing book in the database.
+  const book = books.find((b, i) => {
+    if (b.id == req.params.id) {
+      for (const key in req.body) {
+        // Applying the updates within the req.body to the in-memory book
+        books[i][key] = req.body[key];
+      }
+      return true;
+    }
   });
 
+  if (book) {
+    res.json(book);
+  } else {
+    next();
+  }
+});
 
 
 // DELETE Delete a post
 router.delete('/:id', (req, res) => {
   // The DELETE request route simply removes a resource.
-  const post = books.find((p, i) => {
-    if (p.id == req.params.id) {
+  const book = books.find((b, i) => {
+    if (b.id == req.params.id) {
       books.splice(i, 1);
       return true;
     }
   });
 
-  if (post) res.json(post);
+  if (book) res.json(book);
   else next();
 });
 

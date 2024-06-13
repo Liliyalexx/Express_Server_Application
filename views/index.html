@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="../public/styles/style.css">
+  <title>Homepage</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('../public/images/bookRose.jpeg');
+      /* Replace with your background image path */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .nav {
+      margin-bottom: 20px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.8);
+      /* Semi-transparent white background */
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .books {
+      margin-top: 20px;
+    }
+
+    .book {
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .book img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <a href="/">Home</a>
+    <a href="/users/new">New User</a>
+    <a href="/books/new">New Book</a>
+  </div>
+
+  <div class="container">
+    <h1>Welcome to our Library</h1>
+
+    <div class="books">
+      <div class="book">
+        <h2>Hunger Games</h2>
+        <img src="./images/HungerGames.jpeg" alt="Book 1">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+
+      <div class="book">
+        <h2>Book Title 2</h2>
+        <img src="book2.jpg" alt="Book 2">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Login Form</h2>
+    <form action="/login" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</body>
+
+</html>
