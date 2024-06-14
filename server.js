@@ -4,6 +4,8 @@ const app = express();
 const PORT = process.env.PORT || 3003;
 const userRouter = require('./routes/users.js');
 const bookRouter = require('./routes/books.js');
+const loginRouter = require('./routes/login.js')
+
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'views/index.html')));
 // API Routes
 app.use('/api/users', userRouter);
 app.use('/api/books', bookRouter);
+app.use('/api/login', loginRouter);
 
 app.get('/', (req, res) => {
   res.json({
