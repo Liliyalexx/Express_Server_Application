@@ -5,9 +5,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create User</title>
+  <style>
+     .nav {
+     background-color: #771111;
+     overflow: hidden;
+     padding: 10px 0;
+     align-items: right;
+     }
+
+     .nav a {
+     float: left;
+     display: block;
+     color: white;
+     text-align: center;
+     padding: 14px 16px;
+     text-decoration: none;
+     }
+
+     .nav a:hover {
+     background-color: #ddd;
+     color: black;
+     }
+
+  </style>
 </head>
 
 <body>
+   <div class="nav">
+     <a href="/">Home</a>
+     <a href="/users/new">New User</a>
+     <a href="/books/new">New Book</a>
+   </div>
   <div>
     <h1>Create User</h1>
     <form action="/api/users" method="POST">

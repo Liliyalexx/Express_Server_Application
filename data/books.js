@@ -16,7 +16,7 @@ const books = [
     },
     {
       id: 3,
-      title: "Fahrenheit 451 ",
+      title: "Fahrenheit 451",
       author: "Ray Bradbury", 
       content:
         "non et quaerat ex quae ad maiores\nmaiores recusandae totam aut blanditiis mollitia quas illo\nut voluptatibus voluptatem\nsimilique nostrum eum",
@@ -44,7 +44,7 @@ const books = [
     },
     {
       id: 7,
-      title: "Dunes",
+      title: "Dune",
       author: "Frank Herbert",
       content:
         "deserunt eos nobis asperiores et hic\nest debitis repellat molestiae optio\nnihil ratione ut eos beatae quibusdam distinctio maiores\nearum voluptates et aut adipisci ea maiores voluptas maxime",
@@ -58,7 +58,7 @@ const books = [
     },
     {
       id: 9,
-      title: "Alyce Network",
+      title: "The Alyce Network",
       authoor: " Kate Quinn",
       content:
         "ea velit perferendis earum ut voluptatem voluptate itaque iusto\ntotam pariatur in\nnemo voluptatem voluptatem autem magni tempora minima in\nest distinctio qui assumenda accusamus dignissimos officia nesciunt nobis",

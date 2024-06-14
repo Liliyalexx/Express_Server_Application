@@ -5,9 +5,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Book</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+     background-image:
+     url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.storybooks.app%2F&psig=AOvVaw1rbWEkSIy79S3ov8Glva3r&ust=1718426108632000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJjf_6Ci2oYDFQAAAAAdAAAAABAE');
+    }
+   
+     .nav {
+     background-color: #771111;
+     overflow: hidden;
+     padding: 10px 0;
+     align-items: right;
+     }
+
+     .nav a {
+     float: left;
+     display: block;
+     color: white;
+     text-align: center;
+     padding: 14px 16px;
+     text-decoration: none;
+     }
+
+     .nav a:hover {
+     background-color: #ddd;
+     color: black;
+     }
+
+  </style>
 </head>
 
 <body>
+  <div class="nav">
+    <a href="/">Home</a>
+    <a href="/users/new">New User</a>
+    <a href="/books/new">New Book</a>
+  </div>
   <div>
     <h1>Create Book</h1>
     <form action="/api/books" method="POST">

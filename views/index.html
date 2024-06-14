@@ -4,60 +4,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="../public/styles/style.css">
-  <title>Homepage</title>
+  <title>Library Home</title>
+  <!-- <link rel="stylesheet" href="../public/styles/style.css"> -->
   <style>
     body {
-      margin: 0;
-      padding: 0;
       font-family: Arial, sans-serif;
-      background-image: url('../public/images/bookRose.jpeg');
-      /* Replace with your background image path */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      
     }
 
     .nav {
-      margin-bottom: 20px;
+      background-color: #771111;
+      overflow: hidden;
+      padding: 10px 0;
+      align-items: right;
     }
 
     .nav a {
+      float: left;
+      display: block;
       color: white;
+      text-align: center;
+      padding: 14px 16px;
       text-decoration: none;
-      margin: 0 10px;
+    }
+
+    .nav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .login {
+      margin: 20px;
+    }
+
+    .login form {
+      display: inline-block;
+      text-align: left;
+    }
+
+    .login label {
+      display: block;
+      margin: 5px 0;
     }
 
     .container {
-      background-color: rgba(255, 255, 255, 0.8);
-      /* Semi-transparent white background */
       padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
-      width: 100%;
       text-align: center;
     }
 
     .books {
-      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 100px;
+   
     }
 
     .book {
-      background-color: #f0f0f0;
-      border-radius: 5px;
-      padding: 10px;
-      margin-bottom: 10px;
+      background-color: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      width: 200px;
+      text-align: left;
+      height: 600px;
     }
 
     .book img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
+      width: 100%;
+      height: 200 px;
+      border-radius: 4px;
+      size: 200px;
+    }
+    .img{
+      height: 200px;
+    }
+
+    .book h2 {
+      font-size: 18px;
+      margin: 20px 0;
+
+    }
+
+    .book p {
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+
+    .book ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .book ul li {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .books {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .book {
+        width: 100%;
+       
+      }
     }
   </style>
 </head>
@@ -69,13 +125,26 @@
     <a href="/books/new">New Book</a>
   </div>
 
+  <div class="login">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
   <div class="container">
     <h1>Welcome to our Library</h1>
 
     <div class="books">
       <div class="book">
         <h2>Hunger Games</h2>
-        <img src="./images/HungerGames.jpeg" alt="Book 1">
+        <img src="./images/HungerGames.jpeg" alt="Hunger Games">
         <p>Comments:</p>
         <ul>
           <li>Comment 1</li>
@@ -85,26 +154,89 @@
       </div>
 
       <div class="book">
-        <h2>Book Title 2</h2>
-        <img src="book2.jpg" alt="Book 2">
+        <h2>Three Body Problem</h2>
+        <img src="./images/threebodyproblem.jpeg" alt="Three Body Problem">
         <p>Comments:</p>
         <ul>
           <li>Comment 1</li>
           <li>Comment 2</li>
+          <li>Comment 3</li>
         </ul>
       </div>
-    </div>
+      <div class="book">
+        <h2>Fahrenheit 451</h2>
+        <img src="./images/Fahrenheit-451.jpeg" alt="Fahrenheit 451">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+      <div class="book">
+        <h2>The Little Lady of the Big House</h2>
+        <img src="./images/The-Little-Lady.jpeg" alt="The Little Lady of the Big House">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+      <div class="book">
+        <h2>Dark Matter</h2>
+        <img src="./images/darkMatter.jpeg" alt="Dark Matter">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+      <div class="book">
+        <h2>Tomorrow, and Tomorrow, and Tomorrow</h2>
+        <img src="./images/tomorrow3.jpeg" alt="Tomorrow, and Tomorrow, and Tomorrow">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+      <!-- <div class="book">
+        <h2>Three Body Problem</h2>
+        <img src="./images/threebodyproblem.jpeg" alt="Three Body Problem">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+      <div class="book">
+        <h2>Three Body Problem</h2>
+        <img src="./images/threebodyproblem.jpeg" alt="Three Body Problem">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div>
+      <div class="book">
+        <h2>Three Body Problem</h2>
+        <img src="./images/threebodyproblem.jpeg" alt="Three Body Problem">
+        <p>Comments:</p>
+        <ul>
+          <li>Comment 1</li>
+          <li>Comment 2</li>
+          <li>Comment 3</li>
+        </ul>
+      </div> -->
 
-    <h2>Login Form</h2>
-    <form action="/login" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-      <br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-      <br>
-      <input type="submit" value="Login">
-    </form>
+      <!-- Add more book divs here as needed -->
+
+    </div>
   </div>
 </body>
 
