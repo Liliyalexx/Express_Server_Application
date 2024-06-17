@@ -4,7 +4,8 @@ const app = express();
 const PORT = process.env.PORT || 3003;
 const userRouter = require('./routes/users.js');
 const bookRouter = require('./routes/books.js');
-const loginRouter = require('./routes/login.js')
+const loginRouter = require('./routes/login.js');
+const commentRouter = require('./routes/comments'); 
 
 
 // Serve static files from the 'public' directory
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'views/index.html')));
 app.use('/api/users', userRouter);
 app.use('/api/books', bookRouter);
 app.use('/api/login', loginRouter);
+app.use('/api/comments', commentRouter);
 
 app.get('/', (req, res) => {
   res.json({
@@ -97,6 +99,13 @@ app.get('/users/new', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Resource Not Found' });
 });
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Server Error');
+});
+
 
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));

@@ -43,7 +43,15 @@ router.get('/:id', (req, res, next) => {
 
 router.get('/:id/comments', (req, res) => {
   const bookId = parseInt(req.params.id);
-  const bookComments = comments.filter(comment => comment.bookId === bookId);
+  let bookComments = comments.filter((comment) => comment.bookId === bookId);
+
+  // Optional query parameter for userId filtering
+  const userId = req.query.userId;
+  if (userId) {
+    bookComments = bookComments.filter(
+      (comment) => comment.userId === parseInt(userId)
+    );
+  }
   res.json(bookComments);
 });
 

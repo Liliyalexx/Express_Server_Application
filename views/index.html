@@ -146,7 +146,7 @@
         <h2>Hunger Games</h2>
         <img src="./images/HungerGames.jpeg" alt="Hunger Games">
         <p>Comments:</p>
-        <ul>
+        <ul id="comments-book-1">
           <li>Comment 1</li>
           <li>Comment 2</li>
           <li>Comment 3</li>
@@ -157,7 +157,7 @@
         <h2>Three Body Problem</h2>
         <img src="./images/threebodyproblem.jpeg" alt="Three Body Problem">
         <p>Comments:</p>
-        <ul>
+        <ul id="comments-book-2">
           <li>Comment 1</li>
           <li>Comment 2</li>
           <li>Comment 3</li>
@@ -167,7 +167,7 @@
         <h2>Fahrenheit 451</h2>
         <img src="./images/Fahrenheit-451.jpeg" alt="Fahrenheit 451">
         <p>Comments:</p>
-        <ul>
+        <ul id="comments-book-3">
           <li>Comment 1</li>
           <li>Comment 2</li>
           <li>Comment 3</li>
@@ -177,7 +177,7 @@
         <h2>The Little Lady of the Big House</h2>
         <img src="./images/The-Little-Lady.jpeg" alt="The Little Lady of the Big House">
         <p>Comments:</p>
-        <ul>
+        <ul id="comments-book-4">
           <li>Comment 1</li>
           <li>Comment 2</li>
           <li>Comment 3</li>
@@ -187,7 +187,7 @@
         <h2>Dark Matter</h2>
         <img src="./images/darkMatter.jpeg" alt="Dark Matter">
         <p>Comments:</p>
-        <ul>
+        <ul id="comments-book-5">
           <li>Comment 1</li>
           <li>Comment 2</li>
           <li>Comment 3</li>
@@ -197,12 +197,45 @@
         <h2>Tomorrow, and Tomorrow, and Tomorrow</h2>
         <img src="./images/tomorrow3.jpeg" alt="Tomorrow, and Tomorrow, and Tomorrow">
         <p>Comments:</p>
-        <ul>
+        <ul id="comments-book-6">
           <li>Comment 1</li>
           <li>Comment 2</li>
           <li>Comment 3</li>
         </ul>
       </div>
+
+      <script>
+        // Fetch comments and update UI
+        async function fetchComments() {
+          try {
+            const response = await fetch('/api/comments');
+            const comments = await response.json();
+
+            // Group comments by bookId
+            const commentsByBook = {};
+            comments.forEach(comment => {
+              if (!commentsByBook[comment.bookId]) {
+                commentsByBook[comment.bookId] = [];
+              }
+              commentsByBook[comment.bookId].push(comment.body);
+            });
+
+            // Update UI with comments
+            Object.keys(commentsByBook).forEach(bookId => {
+              const commentsList = document.getElementById(`comments-book-${bookId}`);
+              commentsByBook[bookId].forEach(comment => {
+                const li = document.createElement('li');
+                li.textContent = comment;
+                commentsList.appendChild(li);
+              });
+            });
+          } catch (error) {
+            console.error('Error fetching comments:', error);
+          }
+        }
+
+        fetchComments(); // Fetch comments when the page loads
+      </script>
       <!-- <div class="book">
         <h2>Three Body Problem</h2>
         <img src="./images/threebodyproblem.jpeg" alt="Three Body Problem">
